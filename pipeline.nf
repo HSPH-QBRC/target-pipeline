@@ -47,7 +47,7 @@ process cohort_selection {
 
     tag "Subset the data for our cohort of interest"
     publishDir "${output_dir}/annotations", mode:"copy"
-    container "hsph-qbrc/target-pipeline/pandas"
+    container "ghcr.io/hsph-qbrc/target-pipeline/pandas"
     cpus 2
     memory '4 GB'
 
@@ -71,7 +71,7 @@ process segregate_by_expression {
     tag "Segregate expression on $raw_counts"
     publishDir "${output_dir}/normalized_counts", mode:"copy", pattern: "deseq2_norm_counts.all.tsv"
     publishDir "${output_dir}/annotations", mode:"copy", pattern: "*annotations*"
-    container "hsph-qbrc/target-pipeline/deseq2"
+    container "ghcr.io/hsph-qbrc/target-pipeline/deseq2"
     cpus 2
     memory '8 GB'
 
@@ -102,7 +102,7 @@ process run_dge {
 
     tag "Run differential expression on $raw_counts"
     publishDir "${output_dir}/dge_results", mode:"copy", pattern: "deseq2_results*"
-    container "hsph-qbrc/target-pipeline/deseq2"
+    container "ghcr.io/hsph-qbrc/target-pipeline/deseq2"
     cpus 4
     memory '8 GB'
 
@@ -126,7 +126,7 @@ process prep_gsea_inputs {
 
     tag "Prep the GSEA inputs"
     publishDir "${output_dir}/gsea", mode:"copy"
-    container "hsph-qbrc/target-pipeline/gsea"
+    container "ghcr.io/hsph-qbrc/target-pipeline/gsea"
     cpus 2
     memory '4 GB'
 
@@ -167,7 +167,7 @@ process run_gsea {
     tag "Run GSEA on ${label}"
     publishDir "${output_dir}/gsea/${label}/preranked", mode:"copy", pattern: "*preranked_results.zip"
     publishDir "${output_dir}/gsea/${label}/original", mode:"copy", pattern: "*gsea_results.zip"
-    container "hsph-qbrc/target-pipeline/gsea"
+    container "ghcr.io/hsph-qbrc/target-pipeline/gsea"
     cpus 4
     memory '8 GB'
 
@@ -249,7 +249,7 @@ process map_ensg_to_symbol {
     tag "Run ENSG to symbol gene mapping on $exp_mtx and $dge_results"
     publishDir "${output_dir}/dge_results", mode:"copy", pattern: "deseq2_results*"
     publishDir "${output_dir}/normalized_counts", mode:"copy", pattern: "deseq2_norm_counts.symbol_remapped.*"
-    container "hsph-qbrc/target-pipeline/pandas"
+    container "ghcr.io/hsph-qbrc/target-pipeline/pandas"
     cpus 2
     memory '4 GB'
 
